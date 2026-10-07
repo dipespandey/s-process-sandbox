@@ -1,0 +1,6 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    { "name": "sandbox", "runtimeExecutable": "pnpm", "runtimeArgs": ["preview"], "port": 8788 }
+  ]
+}
