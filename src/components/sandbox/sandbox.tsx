@@ -14,7 +14,6 @@ import { ApplicationPanel } from "./application-panel";
 import { CommandMenu } from "./command-menu";
 import { FundersPanel } from "./funders-panel";
 import { FurtherPanel } from "./further-panel";
-import { Guide } from "./guide";
 import { Header } from "./header";
 import { LiveDialog } from "./live-dialog";
 import { MatrixPanel } from "./matrix-panel";
@@ -136,7 +135,6 @@ export function Sandbox() {
               </div>
             </Tabs>
             <div className="flex-1 lg:min-h-0 lg:overflow-y-auto">
-              {ready && <Guide />}
               <AnimatePresence mode="wait" initial={false}>
                 <motion.div
                   key={tab}

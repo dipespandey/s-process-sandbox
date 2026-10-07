@@ -152,3 +152,25 @@ test("dragging the budget to $0 and back keeps every funder's share", async ({ p
     await expect(node).not.toHaveAccessibleName(/\(\$0\)/);
   }
 });
+
+test("⌘K opens the command menu and jumps to an application without errors", async ({ page }) => {
+  const errors = await open(page);
+  await page.keyboard.press("ControlOrMeta+k");
+  const input = page.getByPlaceholder("Search applications, views, rules…");
+  await expect(input).toBeVisible();
+  await input.fill("Lantern");
+  await page.keyboard.press("Enter");
+  await expect(page.getByRole("tabpanel", { name: "Application" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Lantern Interpretability Commons" })).toBeVisible();
+  expect(errors).toEqual([]);
+});
+
+test("opens in light mode even when the system prefers dark", async ({ browser }) => {
+  const ctx = await browser.newContext({ colorScheme: "dark" });
+  const page = await ctx.newPage();
+  await page.goto("/");
+  await expect(page.getByRole("tabpanel", { name: "Σ Overview" })).toBeVisible();
+  expect(await page.evaluate(() => document.documentElement.classList.contains("dark"))).toBe(false);
+  await expect(page.getByRole("region", { name: "Getting started" })).toHaveCount(0);
+  await ctx.close();
+});
