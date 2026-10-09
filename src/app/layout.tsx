@@ -8,6 +8,9 @@ import "./globals.css";
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 
+// Cloudflare Web Analytics (cookieless). Set only for the official deployment, so forks don't report to it.
+const beaconToken = process.env.NEXT_PUBLIC_CF_BEACON_TOKEN;
+
 export const metadata: Metadata = {
   title: "S-Process Sandbox",
   description:
@@ -29,6 +32,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <TooltipProvider delay={300}>{children}</TooltipProvider>
           <Toaster position="bottom-right" />
         </ThemeProvider>
+        {beaconToken && (
+          <script
+            type="module"
+            src="https://static.cloudflareinsights.com/beacon.min.js"
+            data-cf-beacon={JSON.stringify({ token: beaconToken })}
+          />
+        )}
       </body>
     </html>
   );
